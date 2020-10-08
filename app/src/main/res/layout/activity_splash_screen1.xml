@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+     tools:context=".SplashScreen"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:id="@+id/backGroundImage"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackGround"
+        >
+
+    </ImageView>
+
+    <ImageView
+        android:id="@+id/splashImg"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_above="@id/splashText"
+        android:layout_marginTop="50dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/ic_launcher_foreground">
+
+
+    </ImageView>
+
+    <TextView
+        android:id="@+id/splashText"
+        style="@style/viewParent"
+        android:layout_centerInParent="true"
+        android:fontFamily="cursive"
+        android:text="@string/app_name"
+        android:textColor="@color/colorAccent"
+        android:textSize="48sp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/version"
+        style="@style/viewParent"
+        android:layout_below="@id/splashText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/headerTextSize"
+        android:text="1.0"
+        android:textColor="@color/colorLightGreen"
+        android:textSize="@dimen/newsMoreTextSize">
+
+    </TextView>
+
+<!--    <TextView-->
+<!--        android:id="@+id/developerName"-->
+<!--        style="@style/viewParent"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_centerHorizontal="true"-->
+<!--        android:layout_marginBottom="@dimen/headerTextSize"-->
+<!--        android:text="@string/DeveloperName"-->
+<!--        android:fontFamily="sans-serif"-->
+<!--        android:textColor="@color/colorLightGreen"-->
+<!--        android:textSize="@dimen/loginViewsMargin">-->
+
+<!--    </TextView>-->
+
+
+</RelativeLayout>

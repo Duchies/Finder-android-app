@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/toolbar"-->
+<!--            style="@style/parent"-->
+<!--            android:background="?attr/colorPrimary"-->
+
+<!--            app:titleTextAppearance="@style/Toolbar.TitleText"-->
+<!--        >-->
+
+<!--        </androidx.appcompat.widget.Toolbar>-->
+
+
+<!--    <RelativeLayout-->
+<!--        android:id="@+id/rl"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="65dp"-->
+<!--        android:background="@color/primaryTextColor">-->
+
+<!--        <EditText-->
+
+<!--            android:id="@+id/search_field"-->
+<!--            style="@style/parent"-->
+<!--            android:layout_marginLeft="12dp"-->
+<!--            android:layout_marginTop="12dp"-->
+<!--            android:layout_marginRight="20dp"-->
+<!--            android:layout_toStartOf="@+id/search_btn"-->
+<!--            android:background="@drawable/search_layout"-->
+<!--            android:ems="10"-->
+
+
+<!--            android:hint="Search here"-->
+<!--            android:inputType="textPersonName"-->
+<!--            android:paddingLeft="20dp"-->
+<!--            android:paddingTop="10dp"-->
+<!--            android:paddingRight="20dp"-->
+<!--            android:paddingBottom="10dp"-->
+<!--            android:textColorHint="@color/loginBkColor"-->
+<!--            android:textSize="16sp" />-->
+
+<!--        <ImageButton-->
+<!--            android:id="@+id/search_btn"-->
+<!--            android:layout_width="52dp"-->
+<!--            android:layout_height="52dp"-->
+<!--            android:layout_alignTop="@+id/search_field"-->
+<!--            android:layout_alignBottom="@+id/search_field"-->
+<!--            android:layout_alignParentEnd="true"-->
+<!--            android:layout_marginRight="30dp"-->
+<!--            android:background="@drawable/circle_shape"-->
+<!--            android:clickable="true"-->
+<!--            android:scaleType="centerInside"-->
+<!--            android:src="@drawable/ic_baseline_search_24"-->
+
+<!--            />-->
+
+
+<!--    </RelativeLayout>-->
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="@style/parent"
+            android:layout_below="@id/recycler_view"
+            android:layout_centerInParent="true"
+            android:visibility="visible">
+
+        </ProgressBar>
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add"
+        style="@style/viewParent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/header2TextSize"
+        android:elevation="35dp"
+        android:src="@drawable/ic_baseline_add_24">
+
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
+
+
+</RelativeLayout>
