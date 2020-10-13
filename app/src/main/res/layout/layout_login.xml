@@ -21,11 +21,11 @@
             android:text="Login" />
 
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            style="@style/parent">
+<!--        <com.google.android.material.tabs.TabLayout-->
+<!--            android:id="@+id/tab_layout"-->
+<!--            style="@style/parent">-->
 
-        </com.google.android.material.tabs.TabLayout>
+<!--        </com.google.android.material.tabs.TabLayout>-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInput_Email"
