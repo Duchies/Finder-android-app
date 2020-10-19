@@ -23,12 +23,15 @@
 
         <menu>
             <item
+                android:id="@+id/my_uploads"
+                android:title="My Uploads"
+                android:onClick="myUploadClick"/>
+
+            <item
                 android:id="@+id/logout"
                 android:title="Logout"
                 android:onClick="logoutClick"/>
-<!--            <item-->
-<!--                android:id="@+id/subitem2"-->
-<!--                android:title="Sub Item 2" />-->
+
         </menu>
 
 

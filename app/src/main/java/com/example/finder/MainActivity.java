@@ -334,6 +334,9 @@ public class MainActivity extends AppCompatActivity {
 
         SearchView searchView = (SearchView) item.getActionView();
 
+        searchView.setQueryHint("Search here");
+
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -372,6 +375,8 @@ public class MainActivity extends AppCompatActivity {
         adapter.startListening();
         recyclerView.setAdapter(adapter);
 
+        progressBar.setVisibility(View.INVISIBLE);
+
     }
 
 
@@ -385,6 +390,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void myUploadClick(MenuItem item) {
+
+        Intent intent = new Intent(getApplicationContext(), MyItemList.class);
+        startActivity(intent);
+
+    }
 }
 
 
