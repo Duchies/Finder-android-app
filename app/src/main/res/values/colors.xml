@@ -8,6 +8,8 @@
     <color name="colorLightGreen">#B73E978B</color>
    <color name="colorBackGround">#61EBF6EA</color>
 
+    <color name="TextonLogincardBackGround">#FFF7FBF6</color>
+
 
    <!--colors for modern ui-->
     <color name="whiteTextColor">#fff</color>

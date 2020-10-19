@@ -38,6 +38,7 @@
                 style="@style/modifiedEditText"
                 android:focusable="auto"
                 android:hint="@string/login_email_hint"
+                android:textColorHint="@color/TextonLogincardBackGround"
                 android:inputType="textEmailAddress"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -54,6 +55,7 @@
                 style="@style/modifiedEditText"
                 android:focusable="auto"
                 android:hint="@string/login_password_hint"
+                android:textColorHint="@color/TextonLogincardBackGround"
                 android:inputType="textPassword"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>

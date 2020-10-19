@@ -31,6 +31,7 @@
 
                 style="@style/modifiedEditText"
                 android:hint="@string/login_email_hint"
+                android:textColorHint="@color/TextonLogincardBackGround"
                 android:inputType="text"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -45,6 +46,7 @@
 
                 style="@style/modifiedEditText"
                 android:hint="Name"
+                android:textColorHint="@color/TextonLogincardBackGround"
                 android:inputType="text"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -59,6 +61,7 @@
 
                 style="@style/modifiedEditText"
                 android:hint="Phone Number"
+                android:textColorHint="@color/TextonLogincardBackGround"
                 android:inputType="textEmailAddress"
                 android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -68,12 +71,13 @@
             android:id="@+id/text_input_password"
             android:layout_marginTop="@dimen/signup_text_margin_top"
             app:errorEnabled="true"
+
             app:passwordToggleEnabled="true">
 
             <EditText
 
                 style="@style/modifiedEditText"
-
+                android:textColorHint="@color/TextonLogincardBackGround"
                 android:hint="@string/login_password_hint"
                 android:inputType="textPassword"
                 android:maxLines="1" />
