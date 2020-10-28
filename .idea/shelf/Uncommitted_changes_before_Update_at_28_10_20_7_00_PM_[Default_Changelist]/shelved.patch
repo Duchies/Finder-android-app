@@ -1,0 +1,482 @@
+Index: app/src/main/java/com/example/finder/PostDetail.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.finder;\n\nimport androidx.appcompat.app.AlertDialog;\nimport androidx.appcompat.app.AppCompatActivity;\n\nimport android.content.Intent;\nimport android.os.Bundle;\nimport android.util.Log;\nimport android.view.LayoutInflater;\nimport android.view.View;\nimport android.widget.Button;\nimport android.widget.ImageView;\nimport android.widget.TextView;\n\nimport com.bumptech.glide.Glide;\nimport com.google.firebase.auth.FirebaseAuth;\nimport com.google.firebase.auth.FirebaseUser;\n\npublic class PostDetail extends AppCompatActivity {\n\n    ImageView imageView;\n    TextView tag,foundLocation;\n    FirebaseUser currentUser ;\n    FirebaseAuth mAuth;\n    Button claimBtn;\n    String userName,phone,email;\n\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_post_detail);\n\n        mAuth = FirebaseAuth.getInstance();\n        currentUser = mAuth.getCurrentUser();\n\n        imageView = findViewById(R.id.mainImageView);\n        tag = findViewById(R.id.tag);\n        foundLocation = findViewById(R.id.foundLocation);\n        claimBtn = findViewById(R.id.claimBtn);\n\n        Bundle bundle = getIntent().getExtras();\n\n        String _tag = bundle.getString(\"tag\");\n        String _discription = bundle.getString(\"foundLocation\");\n        String _imageUrl = bundle.getString(\"imageUrl\");\n\n        Glide.with(imageView.getContext()).load(_imageUrl).into(imageView);\n        tag.setText(_tag);\n        foundLocation.setText(_discription);\n\n        claimBtn.setOnClickListener(new View.OnClickListener() {\n            @Override\n            public void onClick(View view) {\n                showDialog();\n            }\n        });\n\n        userName  = currentUser.getDisplayName().toString();\n        phone = currentUser.getPhoneNumber().toString();\n        email = currentUser.getEmail().toString();\n\n    }\n\n private void showDialog() {\n\n        LayoutInflater inflater = LayoutInflater.from(this);\n        View view = inflater.inflate(R.layout.alert_dialog, null);\n\n        Button contactBtn = view.findViewById(R.id.dialog_contactButton);\n\n        TextView textViewUserName = view.findViewById(R.id.dialog_username);\n        TextView textViewUserEmail = view.findViewById(R.id.dialog_usermail);\n        TextView textViewUserPhoneNumber = view.findViewById(R.id.dialog_userphone);\n\n       textViewUserName.setText(userName);\n       textViewUserEmail.setText(email);\n       if (phone.equals(\"\")){\n           textViewUserPhoneNumber.setText(\"7011252597\");\n       }else {\n           textViewUserPhoneNumber.setText(phone);\n       }\n        contactBtn.setOnClickListener(new View.OnClickListener() {\n            @Override\n            public void onClick(View view) {\n              //  Log.e(TAG, \"onClick: contact button\");\n                Intent i=new Intent(android.content.Intent.ACTION_SEND);\n                i.setType(\"text/plain\");\n                i.putExtra(android.content.Intent.EXTRA_SUBJECT,\"Reason For Contact\");\n                i.putExtra(android.content.Intent.EXTRA_TEXT, \"text that you want to put\");\n                startActivity(Intent.createChooser(i,\"Contact via\"));\n            }\n        });\n\n        AlertDialog alertDialog = new AlertDialog.Builder(this)\n                .setView(view)\n                .create();\n\n        alertDialog.show();\n\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/finder/PostDetail.java	(revision 3182533d9f71e7338739614cc2ee3ad97567d2a3)
++++ app/src/main/java/com/example/finder/PostDetail.java	(date 1603807524000)
+@@ -52,7 +52,7 @@
+         claimBtn.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+-                showDialog();
++                showDialog(_tag);
+             }
+         });
+ 
+@@ -62,7 +62,7 @@
+ 
+     }
+ 
+- private void showDialog() {
++ private void showDialog(String tittle) {
+ 
+         LayoutInflater inflater = LayoutInflater.from(this);
+         View view = inflater.inflate(R.layout.alert_dialog, null);
+@@ -84,11 +84,23 @@
+             @Override
+             public void onClick(View view) {
+               //  Log.e(TAG, "onClick: contact button");
+-                Intent i=new Intent(android.content.Intent.ACTION_SEND);
+-                i.setType("text/plain");
+-                i.putExtra(android.content.Intent.EXTRA_SUBJECT,"Reason For Contact");
+-                i.putExtra(android.content.Intent.EXTRA_TEXT, "text that you want to put");
+-                startActivity(Intent.createChooser(i,"Contact via"));
++//                Intent i=new Intent(android.content.Intent.ACTION_SEND);
++//                i.setType("text/plain");
++//                i.putExtra(android.content.Intent.EXTRA_SUBJECT,"Reason For Contact");
++//                i.putExtra(android.content.Intent.EXTRA_TEXT, "text that you want to put");
++//                startActivity(Intent.createChooser(i,"Contact via"));
++
++//                Intent intent = new Intent(PostDetail.this,GroupChat.class);
++//                intent.putExtra("title",tittle);
++//                intent.putExtra("name",currentUser.getDisplayName());
++//                intent.putExtra("email",currentUser.getEmail());
++//                startActivity(intent);
++
++                Intent intent = new Intent(PostDetail.this,Chat.class);
++                startActivity(intent);
++
++//
++
+             }
+         });
+ 
+Index: app/src/main/java/com/example/finder/ScreenItem.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.finder;\n\n\npublic class ScreenItem {\n\n    String Title,Description;\n    int ScreenImg;\n\n    public ScreenItem(String title, String description, int screenImg) {\n        Title = title;\n        Description = description;\n        ScreenImg = screenImg;\n    }\n\n    public void setTitle(String title) {\n        Title = title;\n    }\n\n    public void setDescription(String description) {\n        Description = description;\n    }\n\n    public void setScreenImg(int screenImg) {\n        ScreenImg = screenImg;\n    }\n\n    public String getTitle() {\n        return Title;\n    }\n\n    public String getDescription() {\n        return Description;\n    }\n\n    public int getScreenImg() {\n        return ScreenImg;\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/finder/ScreenItem.java	(revision 3182533d9f71e7338739614cc2ee3ad97567d2a3)
++++ app/src/main/java/com/example/finder/ScreenItem.java	(date 1603180602000)
+@@ -1,5 +1,7 @@
+ package com.example.finder;
+ 
++// intro screen item
++
+ 
+ public class ScreenItem {
+ 
+Index: app/src/main/res/layout/activity_group_chat.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_group_chat.xml	(date 1603807879000)
++++ app/src/main/res/layout/activity_group_chat.xml	(date 1603807879000)
+@@ -0,0 +1,11 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".GroupChat">
++
++
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\nbuildscript {\n    repositories {\n        google()\n        jcenter()\n    }\n    dependencies {\n        classpath \"com.android.tools.build:gradle:4.0.1\"\n        classpath 'com.google.gms:google-services:4.2.0'\n\n        // NOTE: Do not place your application dependencies here; they belong\n        // in the individual module build.gradle files\n    }\n}\n\nallprojects {\n    repositories {\n        google()\n        jcenter()\n    }\n}\n\ntask clean(type: Delete) {\n    delete rootProject.buildDir\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision 3182533d9f71e7338739614cc2ee3ad97567d2a3)
++++ build.gradle	(date 1603563321000)
+@@ -17,6 +17,9 @@
+     repositories {
+         google()
+         jcenter()
++        maven {
++            url "https://dl.bintray.com/cometchat/pro"
++        }
+     }
+ }
+ 
+Index: .idea/jarRepositories.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"RemoteRepositoriesConfiguration\">\n    <remote-repository>\n      <option name=\"id\" value=\"central\" />\n      <option name=\"name\" value=\"Maven Central repository\" />\n      <option name=\"url\" value=\"https://repo1.maven.org/maven2\" />\n    </remote-repository>\n    <remote-repository>\n      <option name=\"id\" value=\"jboss.community\" />\n      <option name=\"name\" value=\"JBoss Community repository\" />\n      <option name=\"url\" value=\"https://repository.jboss.org/nexus/content/repositories/public/\" />\n    </remote-repository>\n    <remote-repository>\n      <option name=\"id\" value=\"BintrayJCenter\" />\n      <option name=\"name\" value=\"BintrayJCenter\" />\n      <option name=\"url\" value=\"https://jcenter.bintray.com/\" />\n    </remote-repository>\n    <remote-repository>\n      <option name=\"id\" value=\"Google\" />\n      <option name=\"name\" value=\"Google\" />\n      <option name=\"url\" value=\"https://dl.google.com/dl/android/maven2/\" />\n    </remote-repository>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/jarRepositories.xml	(revision 3182533d9f71e7338739614cc2ee3ad97567d2a3)
++++ .idea/jarRepositories.xml	(date 1603564400000)
+@@ -21,5 +21,10 @@
+       <option name="name" value="Google" />
+       <option name="url" value="https://dl.google.com/dl/android/maven2/" />
+     </remote-repository>
++    <remote-repository>
++      <option name="id" value="maven" />
++      <option name="name" value="maven" />
++      <option name="url" value="https://dl.bintray.com/cometchat/pro" />
++    </remote-repository>
+   </component>
+ </project>
+\ No newline at end of file
+Index: app/src/main/java/com/example/finder/GroupChat.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/finder/GroupChat.java	(date 1603807654000)
++++ app/src/main/java/com/example/finder/GroupChat.java	(date 1603807654000)
+@@ -0,0 +1,20 @@
++package com.example.finder;
++
++import androidx.appcompat.app.AppCompatActivity;
++
++import android.content.Context;
++import android.content.Intent;
++import android.os.Bundle;
++
++public class GroupChat extends AppCompatActivity {
++
++
++
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_group_chat);
++
++
++    }
++}
+\ No newline at end of file
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>apply plugin: 'com.android.application'\napply plugin: 'com.google.gms.google-services'\n\nandroid {\n    compileSdkVersion 30\n    buildToolsVersion \"30.0.0\"\n\n    defaultConfig {\n        applicationId \"com.example.finder\"\n        minSdkVersion 24\n        targetSdkVersion 30\n        versionCode 1\n        versionName \"1.0\"\n\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\n    }\n\n    buildTypes {\n        release {\n            minifyEnabled false\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\n        }\n    }\n}\n\ndependencies {\n    implementation fileTree(dir: \"libs\", include: [\"*.jar\"])\n    implementation 'androidx.appcompat:appcompat:1.2.0'\n    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'\n    implementation 'androidx.cardview:cardview:1.0.0'\n    implementation 'com.google.firebase:firebase-analytics:17.5.0'\n    implementation 'com.google.firebase:firebase-auth:19.3.2'\n\n    implementation 'com.google.android.material:material:1.2.0'\n    implementation 'com.google.firebase:firebase-storage:19.2.0'\n    implementation 'com.google.firebase:firebase-database:19.4.0'\n\n    implementation 'com.github.bumptech.glide:glide:4.11.0'\n\n    implementation 'com.firebaseui:firebase-ui-database:6.3.0'\n    \n\n\n    //implementation \"androidx.recyclerview:recyclerview:1.1.0\"\n\n\n    testImplementation 'junit:junit:4.12'\n    androidTestImplementation 'androidx.test.ext:junit:1.1.2'\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'\n\n\n\n\n}\n\n\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision 3182533d9f71e7338739614cc2ee3ad97567d2a3)
++++ app/build.gradle	(date 1603565308000)
+@@ -21,6 +21,10 @@
+             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+         }
+     }
++    compileOptions {
++        sourceCompatibility JavaVersion.VERSION_1_8
++        targetCompatibility JavaVersion.VERSION_1_8
++    }
+ }
+ 
+ dependencies {
+@@ -38,11 +42,11 @@
+     implementation 'com.github.bumptech.glide:glide:4.11.0'
+ 
+     implementation 'com.firebaseui:firebase-ui-database:6.3.0'
+-    
+ 
++    implementation 'com.cometchat:pro-android-chat-sdk:2.1.3'
+ 
+     //implementation "androidx.recyclerview:recyclerview:1.1.0"
+-
++    implementation 'com.github.stfalcon:chatkit:0.3.3'
+ 
+     testImplementation 'junit:junit:4.12'
+     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+Index: app/src/main/java/com/example/finder/MyItemList.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.finder;\n\nimport androidx.appcompat.app.AppCompatActivity;\nimport androidx.recyclerview.widget.LinearLayoutManager;\nimport androidx.recyclerview.widget.RecyclerView;\n\nimport android.os.Bundle;\n\nimport com.firebase.ui.database.FirebaseRecyclerOptions;\nimport com.google.firebase.auth.FirebaseAuth;\nimport com.google.firebase.auth.FirebaseUser;\nimport com.google.firebase.database.FirebaseDatabase;\n\npublic class MyItemList extends AppCompatActivity {\n\n\n    FirebaseAuth mAuth;\n    FirebaseUser currentUser;\n    String userID;\n    RecyclerView recyclerView;\n    MyItemListAdapter adapter;\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_my_item_list);\n\n        mAuth = FirebaseAuth.getInstance();\n        currentUser = mAuth.getCurrentUser();\n        userID = currentUser.getUid();\n        recyclerView = (RecyclerView) findViewById(R.id.recycler_view2);\n\n        loadData();\n\n    }\n    private void loadData() {\n\n        recyclerView.setLayoutManager(new LinearLayoutManager(this));\n\n        FirebaseRecyclerOptions<recyclerViewModelClass> options =\n                new FirebaseRecyclerOptions.Builder<recyclerViewModelClass>()\n                        .setQuery(FirebaseDatabase.getInstance().getReference().child(\"Posts\").orderByChild(\"userId\").equalTo(userID)\n                                , recyclerViewModelClass.class)\n                        .build();\n\n        adapter = new MyItemListAdapter(options);\n        recyclerView.setAdapter(adapter);\n\n    }\n\n    @Override\n    protected void onStart() {\n        super.onStart();\n\n        adapter.startListening();\n    }\n\n    @Override\n    protected void onStop() {\n        super.onStop();\n        //   progressBar.setVisibility(View.INVISIBLE);\n        adapter.stopListening();\n    }\n}//
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/finder/MyItemList.java	(revision 3182533d9f71e7338739614cc2ee3ad97567d2a3)
++++ app/src/main/java/com/example/finder/MyItemList.java	(date 1603180602000)
+@@ -33,6 +33,7 @@
+         loadData();
+ 
+     }
++
+     private void loadData() {
+ 
+         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+Index: app/src/main/res/menu/menu_items.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<menu xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:android=\"http://schemas.android.com/apk/res/android\">\n\n\n\n    <item\n        android:id=\"@+id/search\"\n        android:icon=\"@drawable/ic_baseline_search_24\"\n        app:showAsAction=\"always|collapseActionView\"\n        android:title=\"Compose\"\n        app:actionViewClass=\"android.widget.SearchView\" >\n\n    </item>\n\n\n    <item\n        android:id=\"@+id/app_bar_search\"\n\n        android:icon=\"@drawable/ic_baseline_more_vert_24\"\n        app:showAsAction=\"ifRoom\"\n        android:title=\"Logout\">\n\n        <menu>\n            <item\n                android:id=\"@+id/my_uploads\"\n                android:title=\"My Uploads\"\n                android:onClick=\"myUploadClick\"/>\n\n            <item\n                android:id=\"@+id/logout\"\n                android:title=\"Logout\"\n                android:onClick=\"logoutClick\"/>\n\n        </menu>\n\n\n    </item>\n\n\n\n\n\n</menu>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/menu/menu_items.xml	(revision 3182533d9f71e7338739614cc2ee3ad97567d2a3)
++++ app/src/main/res/menu/menu_items.xml	(date 1603792815000)
+@@ -27,6 +27,11 @@
+                 android:title="My Uploads"
+                 android:onClick="myUploadClick"/>
+ 
++            <item
++                android:id="@+id/chat"
++                android:title="Chat"
++                android:onClick="ChatCheckClick"/>
++
+             <item
+                 android:id="@+id/logout"
+                 android:title="Logout"
+Index: app/src/main/java/com/example/finder/Constants.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/finder/Constants.java	(date 1603565065000)
++++ app/src/main/java/com/example/finder/Constants.java	(date 1603565065000)
+@@ -0,0 +1,7 @@
++package com.example.finder;
++
++public class Constants {
++
++    public final static  String appID= "24732c518a6127f";
++    public final static String appAuthKey = "8303c71c91cb7c756d0e7aa14d874f6d9c4680db";
++}
+Index: app/src/main/java/com/example/finder/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.finder;\n\nimport android.Manifest;\nimport android.app.Dialog;\nimport android.content.Intent;\nimport android.content.pm.PackageManager;\nimport android.graphics.Color;\nimport android.graphics.drawable.ColorDrawable;\nimport android.graphics.fonts.FontFamily;\nimport android.graphics.fonts.FontStyle;\nimport android.net.Uri;\nimport android.os.Bundle;\nimport android.view.Gravity;\nimport android.view.Menu;\nimport android.view.MenuItem;\nimport android.view.View;\nimport android.widget.ImageView;\nimport android.widget.ProgressBar;\nimport android.widget.SearchView;\nimport android.widget.TextView;\nimport android.widget.Toast;\nimport android.widget.Toolbar;\n\nimport androidx.annotation.NonNull;\nimport androidx.appcompat.app.ActionBar;\nimport androidx.appcompat.app.AppCompatActivity;\nimport androidx.core.app.ActivityCompat;\nimport androidx.core.content.ContextCompat;\nimport androidx.recyclerview.widget.LinearLayoutManager;\nimport androidx.recyclerview.widget.RecyclerView;\n\nimport com.firebase.ui.database.FirebaseRecyclerOptions;\nimport com.google.android.gms.tasks.OnFailureListener;\nimport com.google.android.gms.tasks.OnSuccessListener;\nimport com.google.android.material.floatingactionbutton.FloatingActionButton;\nimport com.google.firebase.auth.FirebaseAuth;\nimport com.google.firebase.auth.FirebaseUser;\nimport com.google.firebase.database.DatabaseReference;\nimport com.google.firebase.database.FirebaseDatabase;\nimport com.google.firebase.storage.FirebaseStorage;\nimport com.google.firebase.storage.StorageReference;\nimport com.google.firebase.storage.UploadTask;\n\n\npublic class MainActivity extends AppCompatActivity {\n\n    private static final int PReqCode = 2;\n    private static final int REQUESCODE = 2;\n\n    FirebaseAuth mAuth;\n    FirebaseUser currentUser;\n\n\n    adapterPost adapter;\n\n    ProgressBar progressBar;\n    RecyclerView recyclerView;\n\n\n\n    Dialog popAddPost;\n    ImageView popupPostImage, popupAddBtn;\n    TextView popupTitle, popupDescription;\n    ProgressBar popupClickProgress;\n    private Uri pickedImgUri = null;\n\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        setContentView(R.layout.activity_main);\n\n\n        if (FirebaseAuth.getInstance().getCurrentUser() == null) {\n\n            Intent intent = new Intent(this, LoginActivity.class);\n            startActivity(intent);\n            finish();\n        }\n\n\n\n        initPopUp();\n        setupPopupImageClick();\n\n\n        mAuth = FirebaseAuth.getInstance();\n        currentUser = mAuth.getCurrentUser();\n\n        progressBar = findViewById(R.id.progress_bar);\n\n        FloatingActionButton fab = findViewById(R.id.fab_add);\n        fab.setOnClickListener(new View.OnClickListener() {\n            @Override\n            public void onClick(View view) {\n                popAddPost.show();\n            }\n        });\n\n        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);\n\n\n        loadData();\n\n\n    }\n\n    private void loadData() {\n\n        recyclerView.setLayoutManager(new LinearLayoutManager(this));\n\n        FirebaseRecyclerOptions<recyclerViewModelClass> options =\n                new FirebaseRecyclerOptions.Builder<recyclerViewModelClass>()\n                        .setQuery(FirebaseDatabase.getInstance().getReference().child(\"Posts\")\n                                , recyclerViewModelClass.class)\n                        .build();\n\n        adapter = new adapterPost(options);\n        recyclerView.setAdapter(adapter);\n\n\n    }\n\n    private void initPopUp() {\n\n        popAddPost = new Dialog(this);\n\n        popAddPost.setContentView(R.layout.pop_up_add);\n        popAddPost.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));\n        popAddPost.getWindow().setLayout(Toolbar.LayoutParams.MATCH_PARENT, Toolbar.LayoutParams.WRAP_CONTENT);\n        popAddPost.getWindow().getAttributes().gravity = Gravity.TOP;\n\n        // init popup widgets\n\n\n        popupPostImage = popAddPost.findViewById(R.id.popup_img);\n        popupTitle = popAddPost.findViewById(R.id.popup_title);\n        popupDescription = popAddPost.findViewById(R.id.popup_description);\n        popupAddBtn = popAddPost.findViewById(R.id.popup_add);\n        popupClickProgress = popAddPost.findViewById(R.id.popup_progressBar);\n\n        popupAddBtn.setOnClickListener(new View.OnClickListener() {\n            @Override\n            public void onClick(View view) {\n\n\n                popupAddBtn.setVisibility(View.INVISIBLE);\n                popupClickProgress.setVisibility(View.VISIBLE);\n\n\n                if (!popupTitle.getText().toString().isEmpty()\n                        && !popupDescription.getText().toString().isEmpty()\n                        && pickedImgUri != null) {\n\n                    //everything is okey no empty or null value\n                    // TODO Create Post Object and add it to firebase database\n                    // first we need to upload post Image\n                    // access firebase storage\n                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(\"blog_images\");\n                    final StorageReference imageFilePath = storageReference.child(pickedImgUri.getLastPathSegment());\n                    imageFilePath.putFile(pickedImgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {\n                        @Override\n                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {\n\n                            imageFilePath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {\n                                @Override\n                                public void onSuccess(Uri uri) {\n                                    String imageDownlaodLink = uri.toString();\n                                    // create post Object\n                                    Post post = new Post(popupTitle.getText().toString(),\n                                            popupDescription.getText().toString().toLowerCase(),\n                                            imageDownlaodLink,\n                                            currentUser.getUid(),\n                                            currentUser.getPhotoUrl().toString());\n\n                                    // Add post to firebase database\n\n                                    addPost(post);\n\n\n                                }\n                            }).addOnFailureListener(new OnFailureListener() {\n                                @Override\n                                public void onFailure(@NonNull Exception e) {\n                                    // something goes wrong uploading picture\n\n                                    showMessage(e.getMessage());\n                                    popupClickProgress.setVisibility(View.INVISIBLE);\n                                    popupAddBtn.setVisibility(View.VISIBLE);\n\n\n                                }\n                            });\n\n\n                        }\n                    });\n                } else {\n                    showMessage(\"Please verify all input fields and choose Post Image\");\n                    popupAddBtn.setVisibility(View.VISIBLE);\n                    popupClickProgress.setVisibility(View.INVISIBLE);\n\n                }\n\n\n            }\n        });\n\n\n    }\n\n\n    private void setupPopupImageClick() {\n\n\n        popupPostImage.setOnClickListener(new View.OnClickListener() {\n            @Override\n            public void onClick(View view) {\n                // here when image clicked we need to open the gallery\n                // before we open the gallery we need to check if our app have the access to user files\n                // we did this before in register activity I'm just going to copy the code to save time ...\n\n                checkAndRequestForPermission();\n\n\n            }\n        });\n\n\n    }\n\n\n    private void checkAndRequestForPermission() {\n\n\n        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)\n                != PackageManager.PERMISSION_GRANTED) {\n            if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {\n\n                Toast.makeText(MainActivity.this, \"Please accept for required permission\", Toast.LENGTH_SHORT).show();\n\n            } else {\n                ActivityCompat.requestPermissions(MainActivity.this,\n                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},\n                        PReqCode);\n            }\n\n        } else\n            // everything goes well : we have permission to access user gallery\n            openGallery();\n\n    }\n\n    private void openGallery() {\n\n        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);\n        galleryIntent.setType(\"image/*\");\n        startActivityForResult(galleryIntent, REQUESCODE);\n    }\n\n    @Override\n    protected void onActivityResult(int requestCode, int resultCode, Intent data) {\n        super.onActivityResult(requestCode, resultCode, data);\n\n        if (resultCode == RESULT_OK && requestCode == REQUESCODE && data != null) {\n\n            // the user has successfully picked an image\n            // we need to save its reference to a Uri variable\n            pickedImgUri = data.getData();\n            popupPostImage.setImageURI(pickedImgUri);\n\n        }\n\n\n    }\n\n    private void addPost(Post post) {\n\n        FirebaseDatabase database = FirebaseDatabase.getInstance();\n        DatabaseReference myRef = database.getReference(\"Posts\").push();\n\n        // get post unique ID and upadte post key\n        String key = myRef.getKey();\n        post.setPostKey(key);\n\n\n        // add post data to firebase database\n\n        myRef.setValue(post).addOnSuccessListener(new OnSuccessListener<Void>() {\n            @Override\n            public void onSuccess(Void aVoid) {\n                showMessage(\"Post Added successfully\");\n                popupClickProgress.setVisibility(View.INVISIBLE);\n                popupAddBtn.setVisibility(View.VISIBLE);\n                popAddPost.dismiss();\n            }\n        });\n\n\n    }\n\n\n    private void showMessage(String message) {\n\n        Toast.makeText(MainActivity.this, message, Toast.LENGTH_LONG).show();\n\n    }\n\n    @Override\n    protected void onStart() {\n\n\n        super.onStart();\n\n        adapter.startListening();\n\n\n    }\n\n    @Override\n    protected void onStop() {\n        super.onStop();\n        //   progressBar.setVisibility(View.INVISIBLE);\n        adapter.stopListening();\n\n\n    }\n\n    @Override\n    public boolean onCreateOptionsMenu(Menu menu) {\n        // Inflate the menu; this adds items to the action bar if it is present.\n        getMenuInflater().inflate(R.menu.menu_items, menu);\n\n        MenuItem item = menu.findItem(R.id.search);\n\n        SearchView searchView = (SearchView) item.getActionView();\n\n        searchView.setQueryHint(\"Search here\");\n\n\n        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {\n            @Override\n            public boolean onQueryTextSubmit(String s) {\n\n\n                firebaseUserSearch(s.toLowerCase());\n\n                return false;\n            }\n\n            @Override\n            public boolean onQueryTextChange(String s) {\n                firebaseUserSearch(s.toLowerCase());\n                return false;\n            }\n        });\n\n        return super.onCreateOptionsMenu(menu);\n    }\n\n    private void firebaseUserSearch(String query) {\n\n        //recyclerView.removeAllViewsInLayout();\n\n        recyclerView.setLayoutManager(new LinearLayoutManager(this));\n\n        FirebaseRecyclerOptions<recyclerViewModelClass> options1 =\n                new FirebaseRecyclerOptions.Builder<recyclerViewModelClass>()\n                        .setQuery(FirebaseDatabase.getInstance().getReference().child(\"Posts\").orderByChild(\"description\")\n                                        .startAt(query)\n                                        .endAt(query + \"\\uf8ff\")\n                                , recyclerViewModelClass.class)\n                        .build();\n\n        adapter = new adapterPost(options1);\n        adapter.startListening();\n        recyclerView.setAdapter(adapter);\n\n        progressBar.setVisibility(View.INVISIBLE);\n\n    }\n\n\n    public void logoutClick(MenuItem item) {\n\n        FirebaseAuth.getInstance().signOut();\n        Intent out_to_login = new Intent(getApplicationContext(), LoginActivity.class);\n        startActivity(out_to_login);\n        finish();\n\n    }\n\n\n    public void myUploadClick(MenuItem item) {\n\n        Intent intent = new Intent(getApplicationContext(), MyItemList.class);\n        startActivity(intent);\n\n    }\n}\n\n\n\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/finder/MainActivity.java	(revision 3182533d9f71e7338739614cc2ee3ad97567d2a3)
++++ app/src/main/java/com/example/finder/MainActivity.java	(date 1603792849000)
+@@ -395,6 +395,13 @@
+         Intent intent = new Intent(getApplicationContext(), MyItemList.class);
+         startActivity(intent);
+ 
++    }
++
++    public void ChatCheckClick(MenuItem item) {
++        Intent intent = new Intent(getApplicationContext(),Chat.class);
++        startActivity(intent);
++
++
+     }
+ }
+ 
+Index: app/src/main/res/layout/activity_chat.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_chat.xml	(date 1603795217000)
++++ app/src/main/res/layout/activity_chat.xml	(date 1603795217000)
+@@ -0,0 +1,30 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".Chat">
++
++
++    <EditText
++        android:id="@+id/UserIdText"
++        style="@style/parent"
++        android:hint="enter you User id "
++        app:layout_constraintTop_toTopOf="parent"
++        tools:ignore="MissingConstraints">
++
++
++    </EditText>
++
++    <Button
++        style="@style/parent"
++        app:layout_constraintTop_toBottomOf="@+id/UserIdText"
++        android:id="@+id/submit_button"
++        android:text="login in "
++        tools:ignore="MissingConstraints">
++
++    </Button>
++
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/finder/Chat.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/finder/Chat.java	(date 1603807524000)
++++ app/src/main/java/com/example/finder/Chat.java	(date 1603807524000)
+@@ -0,0 +1,97 @@
++package com.example.finder;
++
++import androidx.appcompat.app.AppCompatActivity;
++
++import android.content.Intent;
++import android.os.Bundle;
++import android.util.Log;
++import android.view.View;
++import android.widget.Button;
++import android.widget.EditText;
++import android.widget.Toast;
++
++import com.cometchat.pro.core.AppSettings;
++import com.cometchat.pro.core.CometChat;
++import com.cometchat.pro.exceptions.CometChatException;
++import com.cometchat.pro.models.User;
++import com.google.firebase.auth.FirebaseAuth;
++import com.google.firebase.auth.FirebaseUser;
++
++public class Chat extends AppCompatActivity {
++
++    Constants constants;
++    FirebaseAuth mAuth;
++    FirebaseUser currentUser;
++    @Override
++    protected void onCreate(Bundle savedInstanceState) {
++        super.onCreate(savedInstanceState);
++        setContentView(R.layout.activity_chat);
++
++        mAuth = FirebaseAuth.getInstance();
++        currentUser = mAuth.getCurrentUser();
++        initCometChat();
++        initViews();
++    }
++
++    private void initViews() {
++        EditText userText = findViewById(R.id.UserIdText);
++        Button SubmitBtn = findViewById(R.id.submit_button);
++
++        SubmitBtn.setOnClickListener(view -> {
++
++            String UID = "SUPERHERO1"; // Replace with the UID of the user to login
++            String authKey = constants.appAuthKey; // Replace with your App Auth Key
++
++//
++                CometChat.login(UID, authKey, new CometChat.CallbackListener<User>() {
++
++                    @Override
++                    public void onSuccess(User user) {
++                        String msg = userText.getText().toString();
++                        redirectToGroupChatClass(msg);
++                     //   Log.d(TAG, "Login Successful : " + user.toString());
++                    }
++
++                    @Override
++                    public void onError(CometChatException e) {
++                        Toast.makeText(Chat.this, "somthing wrong !", Toast.LENGTH_SHORT).show();
++                     //   Log.d(TAG, "Login failed with exception: " + e.getMessage());
++                    }
++                });
++
++        });
++
++
++    }
++
++    private void redirectToGroupChatClass(String msg) {
++
++     Intent i = new Intent(Chat.this,GroupChat.class);
++     i.putExtra("msg",msg);
++     startActivity(i);
++     finish();
++
++    }
++
++    private void initCometChat() {
++        String appID = constants.appID; // Replace with your App ID
++        String region = "us"; // Replace with your App Region ("eu" or "us")
++
++        AppSettings appSettings=new AppSettings.AppSettingsBuilder().subscribePresenceForAllUsers().setRegion(region).build();
++
++        CometChat.init(this, appID,appSettings, new CometChat.CallbackListener<String>() {
++            @Override
++            public void onSuccess(String successMessage) {
++
++
++                Log.d("Chat class", "Initialization completed successfully");
++            }
++            @Override
++            public void onError(CometChatException e) {
++
++                Log.d("Chat Class", "Initialization failed with exception: " + e.getMessage());
++            }
++        });
++
++    }
++}
+\ No newline at end of file
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    package=\"com.example.finder\">\n\n    <uses-permission android:name=\"android.permission.READ_EXTERNAL_STORAGE\" />\n    <uses-permission android:name=\"android.permission.INTERNET\" />\n\n    <application\n        android:allowBackup=\"true\"\n        android:icon=\"@mipmap/ic_launcher\"\n        android:label=\"@string/app_name\"\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\n        android:supportsRtl=\"true\"\n        android:theme=\"@style/AppTheme\">\n        <activity android:name=\".MyItemList\"\n            android:label=\"My Uploads\"\n            android:parentActivityName=\".MainActivity\"\n            android:screenOrientation=\"portrait\"\n            >\n\n        </activity>\n        <activity android:name=\".IntroActivity\"></activity>\n        <activity android:name=\".SplashScreen\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\" />\n\n                <category android:name=\"android.intent.category.LAUNCHER\" />\n            </intent-filter>\n        </activity>\n        <activity android:name=\".PostDetail\"\n            android:parentActivityName=\".MainActivity\"\n            android:screenOrientation=\"portrait\"\n            />\n        <activity android:name=\".RegisterUserActivity\"\n            android:screenOrientation=\"portrait\"\n            />\n        <activity android:name=\".LoginActivity\"\n            android:screenOrientation=\"portrait\"\n            />\n        <activity android:name=\".MainActivity\"\n            android:screenOrientation=\"portrait\"\n            >\n\n        </activity>\n    </application>\n\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision 3182533d9f71e7338739614cc2ee3ad97567d2a3)
++++ app/src/main/AndroidManifest.xml	(date 1603792093000)
+@@ -12,14 +12,14 @@
+         android:roundIcon="@mipmap/ic_launcher_round"
+         android:supportsRtl="true"
+         android:theme="@style/AppTheme">
+-        <activity android:name=".MyItemList"
++        <activity android:name=".GroupChat"></activity>
++        <activity android:name=".Chat" />
++        <activity
++            android:name=".MyItemList"
+             android:label="My Uploads"
+             android:parentActivityName=".MainActivity"
+-            android:screenOrientation="portrait"
+-            >
+-
+-        </activity>
+-        <activity android:name=".IntroActivity"></activity>
++            android:screenOrientation="portrait" />
++        <activity android:name=".IntroActivity" />
+         <activity android:name=".SplashScreen">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN" />
+@@ -27,21 +27,19 @@
+                 <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
+         </activity>
+-        <activity android:name=".PostDetail"
++        <activity
++            android:name=".PostDetail"
+             android:parentActivityName=".MainActivity"
+-            android:screenOrientation="portrait"
+-            />
+-        <activity android:name=".RegisterUserActivity"
+-            android:screenOrientation="portrait"
+-            />
+-        <activity android:name=".LoginActivity"
+-            android:screenOrientation="portrait"
+-            />
+-        <activity android:name=".MainActivity"
+-            android:screenOrientation="portrait"
+-            >
+-
+-        </activity>
++            android:screenOrientation="portrait" />
++        <activity
++            android:name=".RegisterUserActivity"
++            android:screenOrientation="portrait" />
++        <activity
++            android:name=".LoginActivity"
++            android:screenOrientation="portrait" />
++        <activity
++            android:name=".MainActivity"
++            android:screenOrientation="portrait" />
+     </application>
+ 
+ </manifest>
+\ No newline at end of file
