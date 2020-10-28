@@ -52,7 +52,7 @@ public class PostDetail extends AppCompatActivity {
         claimBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDialog();
+                showDialog(_tag);
             }
         });
 
@@ -62,7 +62,7 @@ public class PostDetail extends AppCompatActivity {
 
     }
 
- private void showDialog() {
+ private void showDialog(String tittle) {
 
         LayoutInflater inflater = LayoutInflater.from(this);
         View view = inflater.inflate(R.layout.alert_dialog, null);
@@ -84,11 +84,23 @@ public class PostDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
               //  Log.e(TAG, "onClick: contact button");
-                Intent i=new Intent(android.content.Intent.ACTION_SEND);
-                i.setType("text/plain");
-                i.putExtra(android.content.Intent.EXTRA_SUBJECT,"Reason For Contact");
-                i.putExtra(android.content.Intent.EXTRA_TEXT, "text that you want to put");
-                startActivity(Intent.createChooser(i,"Contact via"));
+//                Intent i=new Intent(android.content.Intent.ACTION_SEND);
+//                i.setType("text/plain");
+//                i.putExtra(android.content.Intent.EXTRA_SUBJECT,"Reason For Contact");
+//                i.putExtra(android.content.Intent.EXTRA_TEXT, "text that you want to put");
+//                startActivity(Intent.createChooser(i,"Contact via"));
+
+//                Intent intent = new Intent(PostDetail.this,GroupChat.class);
+//                intent.putExtra("title",tittle);
+//                intent.putExtra("name",currentUser.getDisplayName());
+//                intent.putExtra("email",currentUser.getEmail());
+//                startActivity(intent);
+
+                Intent intent = new Intent(PostDetail.this,Chat.class);
+                startActivity(intent);
+
+//
+
             }
         });
 

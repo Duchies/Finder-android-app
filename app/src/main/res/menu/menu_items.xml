@@ -28,6 +28,11 @@
                 android:onClick="myUploadClick"/>
 
             <item
+                android:id="@+id/chat"
+                android:title="Chat"
+                android:onClick="ChatCheckClick"/>
+
+            <item
                 android:id="@+id/logout"
                 android:title="Logout"
                 android:onClick="logoutClick"/>

@@ -396,6 +396,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+
+    public void ChatCheckClick(MenuItem item) {
+        Intent intent = new Intent(getApplicationContext(),Chat.class);
+        startActivity(intent);
+
+
+    }
 }
 
 

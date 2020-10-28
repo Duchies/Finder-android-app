@@ -1,5 +1,7 @@
 package com.example.finder;
 
+// intro screen item
+
 
 public class ScreenItem {
 

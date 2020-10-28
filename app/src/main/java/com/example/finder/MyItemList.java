@@ -33,6 +33,7 @@ public class MyItemList extends AppCompatActivity {
         loadData();
 
     }
+
     private void loadData() {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
