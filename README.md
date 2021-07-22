@@ -3,3 +3,5 @@
 - App database managed by firebase database and firebase authentication for authentication of users.
 - Third Party libraries used in the app are Glide Gson and Volley. App has good code quality. 
 - Tech used - Android Studio (XML for Frontend , Java for Backend).
+
+# download app link - https://github.com/Duchies/Finder-android-app/releases/download/v0.1/FINDER.apk
