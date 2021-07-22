@@ -14,3 +14,5 @@
 3) Android will ask you to grant permission to either the file browser or your web browser to install the app. Grant the permission and it should bounce 
 you back to the installation screen. If not, navigate back to your Download folder after granting the permission to try again.The app should safely install.
 
+# figma vitual view 
+- link -https://www.figma.com/proto/Fzg5THdOVKhkBJujygeZ52/Finder-App-Virtual-View?node-id=17%3A22&scaling=contain
