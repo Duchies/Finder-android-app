@@ -4,4 +4,5 @@
 - Third Party libraries used in the app are Glide Gson and Volley. App has good code quality. 
 - Tech used - Android Studio (XML for Frontend , Java for Backend).
 
-# download app link - https://github.com/Duchies/Finder-android-app/releases/download/v0.1/FINDER.apk
+# download app 
+ link - https://github.com/Duchies/Finder-android-app/releases/download/v0.1/FINDER.apk
