@@ -166,15 +166,22 @@ public class MainActivity extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     String imageDownlaodLink = uri.toString();
                                     // create post Object
-                                    Post post = new Post(popupTitle.getText().toString(),
-                                            popupDescription.getText().toString().toLowerCase(),
-                                            imageDownlaodLink,
-                                            currentUser.getUid(),
-                                            currentUser.getPhotoUrl().toString());
+                                   if( currentUser.getPhotoUrl() == null){
 
-                                    // Add post to firebase database
+                                        showMessage("You don't have permission to add data");
 
-                                    addPost(post);
+                                    }else {
+
+                                        Post post = new Post(popupTitle.getText().toString(),
+                                                popupDescription.getText().toString(),
+                                                imageDownlaodLink,
+                                                currentUser.getUid(),
+                                                currentUser.getPhotoUrl().toString());
+
+                                        // Add post to firebase database
+                                        showMessage("post added!");
+                                        addPost(post);
+                                    }
 
 
                                 }
